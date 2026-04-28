@@ -81,6 +81,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MINS_UNDS:
+        case 0x5F00: // Add support for VIA User 0 (0x5F00)
             if (record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
                     register_code(KC_INT1);
