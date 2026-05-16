@@ -78,7 +78,23 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+void keyboard_post_init_user(void) {
+  set_auto_mouse_enable(true);
+  set_auto_mouse_timeout(10000);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    uint8_t layer = get_highest_layer(layer_state);
+    if (layer == 4 || layer == 5) {
+        if (record->event.pressed) {
+            if (keymap_key_to_keycode(layer, record->event.key) == KC_TRNS) {
+                layer_off(4);
+                layer_off(5);
+                return false;
+            }
+        }
+    }
+
     switch (keycode) {
         case MINS_UNDS:
         case 0x5F00: // Add support for VIA User 0 (0x5F00)
